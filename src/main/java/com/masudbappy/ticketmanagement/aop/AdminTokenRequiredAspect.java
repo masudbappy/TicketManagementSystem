@@ -1,4 +1,4 @@
-package com.masudbappy.ticketmanagement.controller.aop;
+package com.masudbappy.ticketmanagement.aop;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;

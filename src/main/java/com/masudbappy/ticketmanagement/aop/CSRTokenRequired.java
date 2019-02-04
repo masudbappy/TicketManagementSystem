@@ -1,4 +1,4 @@
-package com.masudbappy.ticketmanagement.controller.aop;
+package com.masudbappy.ticketmanagement.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.masudbappy.ticketmanagement.controller.aop;
+package com.masudbappy.ticketmanagement.aop;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -17,10 +17,15 @@ import io.jsonwebtoken.Jwts;
 
 @Aspect
 @Component
-public class UserTokenRequiredAspect {
+public class TokenRequiredAspect {
 
-    @Before("@annotation(userTokenRequired)")
-    public void tokenRequiredWithAnnotation(UserTokenRequired userTokenRequired) throws Throwable{
+    @Before("execution(* com.packtpub.restapp.HomeController.testAOPExecution())")
+    public void tokenRequiredWithoutAnnoation() throws Throwable{
+        System.out.println("Before tokenRequiredWithExecution");
+    }
+
+    @Before("@annotation(tokenRequired)")
+    public void tokenRequiredWithAnnotation(TokenRequired tokenRequired) throws Throwable{
 
         ServletRequestAttributes reqAttributes = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = reqAttributes.getRequest();
@@ -40,10 +45,8 @@ public class UserTokenRequiredAspect {
             throw new IllegalArgumentException("Token Error : Claim is null");
         }
 
-        String subject = claims.getSubject();
-
-        if(subject.split("=").length != 2){
-            throw new IllegalArgumentException("User token is not authorized");
+        if(!claims.getSubject().equalsIgnoreCase("packt")){
+            throw new IllegalArgumentException("Subject doesn't match in the token");
         }
     }
 }
